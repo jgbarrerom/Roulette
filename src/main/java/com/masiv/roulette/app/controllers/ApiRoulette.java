@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masiv.roulette.app.business.RouletteGame;
+import com.masiv.roulette.app.business.RouletteGameImpl;
 import com.masiv.roulette.app.models.BetData;
 import com.masiv.roulette.app.models.Roulette;
 import com.masiv.roulette.app.pojos.BetModel;
+import com.masiv.roulette.app.pojos.RouletteModel;
 import com.masiv.roulette.app.services.BetService;
 import com.masiv.roulette.app.services.RouletteService;
 import com.masiv.roulette.app.services.RouletteServiceImpl;
@@ -51,7 +53,7 @@ public class ApiRoulette {
 
 	@GetMapping("/closeRoulette/{codRoulette}")
 	public List<BetModel> closeRoulette(@PathVariable(name = "codRoulette") String idRoulette) {
-		List<BetModel> betMades = this.betService.getAllBetByRoulette(idRoulette); 
+		List<BetModel> betMades = this.betService.getAllBetByRoulette(idRoulette);
 		this.rouletteService.closeRoulette(idRoulette);
 		this.rouletteGame.playBall();
 		this.rouletteGame.findWinners(betMades);
@@ -60,12 +62,12 @@ public class ApiRoulette {
 	}
 
 	@GetMapping("/getRoulettes")
-	public List<Roulette> listRoulette() {
+	public List<RouletteModel> listRoulette() {
 		return this.rouletteService.getAllRoulette();
 	}
 	
 	@GetMapping("/getBets")
-	public List<BetData> getBets(String rouletteId){
+	public List<BetModel> getBets(String rouletteId){
 		return this.betService.getAllBets();
 	}
 	

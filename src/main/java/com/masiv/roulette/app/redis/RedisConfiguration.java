@@ -1,5 +1,6 @@
 package com.masiv.roulette.app.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -10,6 +11,12 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EnableRedisRepositories
 public class RedisConfiguration {
+	
+	@Value("${redis.hostname}")
+    private String redisHostName;
+
+    @Value("${redis.port}")
+    private int redisPort;
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
@@ -20,7 +27,7 @@ public class RedisConfiguration {
 
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
-		RedisStandaloneConfiguration redisConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
+		RedisStandaloneConfiguration redisConfiguration = new RedisStandaloneConfiguration(redisHostName, redisPort);
 		return new JedisConnectionFactory(redisConfiguration);
 	}
 	

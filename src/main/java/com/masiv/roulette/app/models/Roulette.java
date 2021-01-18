@@ -1,14 +1,14 @@
 package com.masiv.roulette.app.models;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import com.masiv.roulette.app.utils.Colour;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.masiv.roulette.app.utils.StatusRoulette;
 import com.masiv.roulette.app.utils.Utilities;
 

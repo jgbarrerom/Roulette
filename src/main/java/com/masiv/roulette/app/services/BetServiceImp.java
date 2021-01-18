@@ -11,6 +11,7 @@ import com.masiv.roulette.app.pojos.BetModel;
 import com.masiv.roulette.app.repositories.BetRepository;
 import com.masiv.roulette.app.utils.Colour;
 import com.masiv.roulette.app.utils.ResponseAction;
+import com.masiv.roulette.app.utils.Utilities;
 
 @Service
 public class BetServiceImp implements BetService {
@@ -20,6 +21,9 @@ public class BetServiceImp implements BetService {
 
 	@Override
 	public ResponseAction saveBet(BetModel dataBet) {
+		if(Utilities.MAX_AMOUNT_BET.compareTo(dataBet.getAmount()) == -1) {
+			return ResponseAction.DENIED;
+		}
 		BetData betEntity = new BetData();
 		betEntity.setAmountBet(dataBet.getAmount());
 		betEntity.setClientId(dataBet.getUserId());
@@ -50,9 +54,16 @@ public class BetServiceImp implements BetService {
 	}
 
 	@Override
-	public List<BetData> getAllBets() {
-		List<BetData> listOfBets = new ArrayList<BetData>();
-		this.betRepository.findAll().forEach(listOfBets::add);
+	public List<BetModel> getAllBets() {
+		List<BetModel> listOfBets = new ArrayList<BetModel>();
+		this.betRepository.findAll().forEach(bet -> {
+			BetModel betModel = new BetModel();
+			betModel.setAmount(bet.getAmountBet());
+			betModel.setColour(bet.getColorBet().toString());
+			betModel.setRouletteId(bet.getRuletteId());
+			betModel.setUserId(bet.getClientId());
+			listOfBets.add(betModel);
+		});
 		return listOfBets;
 	}
 

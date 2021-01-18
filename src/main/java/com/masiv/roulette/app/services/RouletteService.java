@@ -3,6 +3,7 @@ package com.masiv.roulette.app.services;
 import java.util.List;
 
 import com.masiv.roulette.app.models.Roulette;
+import com.masiv.roulette.app.pojos.RouletteModel;
 import com.masiv.roulette.app.utils.ResponseAction;
 
 public interface RouletteService {
@@ -13,5 +14,5 @@ public interface RouletteService {
 	
 	void closeRoulette(String rouletteId);
 	
-	List<Roulette> getAllRoulette();
+	List<RouletteModel> getAllRoulette();
 }
